@@ -210,10 +210,6 @@
     </style>
     <div class="container-xxl mx-auto p-0  position-relative header-2-3" style="font-family: 'Poppins', sans-serif;">
       <nav class="navbar navbar-expand-lg navbar-dark">
-        <a href="#">
-          <img style="margin-right:0.75rem"
-            src="http://api.elements.buildwithangga.com/storage/files/2/assets/Header/Header2/Header-2-3.png" alt="">
-        </a>
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="modal" data-bs-target="#targetModal-item">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -283,7 +279,7 @@
                   <ul class="dropdown-menu dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <li>
                       <a class="dropdown-item" href="{{ route('logout') }}"
-                      onclick="event.preventDefault(); document.getElementById('logout-form').submit();"">Logout</a>
+                      onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
             
                       <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
@@ -721,7 +717,7 @@
 						<a href="" class="footer-link" style="text-decoration: none">Licenses</a>
 					</nav>
 					<nav class="d-flex flex-lg-row flex-column align-items-center justify-content-center">
-						<p style="margin: 0">Copyright © 2021 Analystic Max</p>
+						<p style="margin: 0">Copyright © 2022 Ahmad Septian</p>
 					</nav>
 				</div>
 			</div>

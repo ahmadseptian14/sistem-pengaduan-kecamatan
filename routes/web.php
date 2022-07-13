@@ -27,6 +27,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// User
 Route::middleware(['auth', 'user'])->group(function() {
 
 
@@ -39,13 +40,10 @@ Route::middleware(['auth', 'user'])->group(function() {
     Route::get('/input-penilaian', [PenilaianController::class, 'create'])->name('penilaian.create');
     Route::post('/input-penilaian', [PenilaianController::class, 'store'])->name('penilaian.store');
 
-
-
-
-
 });
    
 
+// Admin
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
@@ -53,7 +51,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan.index');
     Route::get('/detail-pengaduan/{id}', [PengaduanController::class, 'show'])->name('pengaduan.show');
     Route::delete('/pengaduan/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.destroy');
-    Route::get('laporan-cetak', [PengaduanController::class, 'cetak'])->name('laporan.cetak');
+    Route::get('/cetak-laporan', [PengaduanController::class, 'cetakForm'])->name('cetak.form');
+    Route::get('/cetak-data-pengaduan', [PengaduanController::class, 'cetak'])->name('cetak.laporan');
 
     // Tanggapan
     Route::get('/tanggapan/{id}', [TanggapanController::class, 'show'])->name('tanggapan.show');

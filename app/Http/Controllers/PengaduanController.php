@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Pengaduan;
 use App\Models\Tanggapan;
-// use Barryvdh\DomPDF\PDF;
+use Carbon\Carbon;
 use PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
-
 
 class PengaduanController extends Controller
 {
@@ -20,11 +19,16 @@ class PengaduanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if(isset($_GET['cari'])) {
+            $pengaduans = Pengaduan::whereBetween('created_at', [$request->start_date, $request->end_date])->get();
+            return view('pages.admin.pengaduan.index', [
+                'pengaduans' => $pengaduans
+            ]);
+        }
+        
         $pengaduans = Pengaduan::orderBy('created_at', 'desc')->get();
-
-        // $pengaduans = Pengaduan::orderBy('id', 'desc')->latest('id')->get();
 
 
         return view('pages.admin.pengaduan.index', [
@@ -139,11 +143,22 @@ class PengaduanController extends Controller
     }
 
 
-    public function cetak()
+    public function cetakForm()
     {
-        $pengaduans = Pengaduan::all();
+        return view('pages.admin.pengaduan.export');
+    }
 
-        $pdf = PDF::loadview('pages.admin.pengaduan.exportAll',compact('pengaduans'));
-        return $pdf->download('laporan-semua-pengaduan.pdf');
+    public function cetak(Request $request)
+    {
+        // $pengaduans = Pengaduan::whereBetween('created_at', [$tglAwal, $tglAkhir])->get();
+
+        if(isset($_GET['cari'])) {
+            $pengaduans = Pengaduan::whereBetween('created_at', [$request->start_date, $request->end_date])->get();
+            
+            $pdf = PDF::loadview('pages.admin.pengaduan.exportAll',compact('pengaduans'));
+            return $pdf->download('laporan-semua-pengaduan.pdf');
+        }
+
+       
     }
 }

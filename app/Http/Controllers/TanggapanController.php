@@ -41,15 +41,13 @@ class TanggapanController extends Controller
      */
     public function store(Request $request)
     {   
-        $pengaduan = Pengaduan::all();
+        
         DB::table('pengaduans')->where('id', $request->pengaduan_id)->update([
             'status'=> $request->status,
         ]);
         
-
         $petugas_id = Auth::user()->id;        
 
-            
         $data = $request->all();
 
         $data['pengaduan_id'] = $request->pengaduan_id;

@@ -19,7 +19,7 @@
                         </ul>
                     </div>   
                     @endif
-                    <div class="card" style="background-color : #0f0b81">
+                    <div class="card" style="background-color : #0f0b8a">
                         <div class="card-body">
                            <form action="{{route('pengaduan.store')}}" method="POST" enctype="multipart/form-data">
                                 @csrf

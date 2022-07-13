@@ -23,6 +23,14 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="{{route('cetak.form')}}" class="nav-link">
+            <i class=" nav-icon fa fa-list-alt" aria-hidden="true"></i>
+            <p>
+              Export Laporan Pengaduan
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="{{route('penilaian.index')}}" class="nav-link">
             <i class=" nav-icon fa fa-list-alt" aria-hidden="true"></i>
             <p>

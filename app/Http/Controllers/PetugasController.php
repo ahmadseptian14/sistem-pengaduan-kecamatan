@@ -19,9 +19,11 @@ class PetugasController extends Controller
     public function index()
     {
         $petugass = DB::table('users')->where('roles', '=', 'ADMIN')->get();
+
         return view('pages.admin.petugas.index', [
             'petugass' => $petugass
         ]);
+        
     }
 
     /**

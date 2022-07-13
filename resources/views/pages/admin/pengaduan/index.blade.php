@@ -13,8 +13,32 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
+                        <h3 class="mb-3 mt-3 mr-3 ml-3">Cari Berdasarkan Tanggal</h3>
+                        <div class="container p-3">
+                            <form action="" method="GET">
+                            @csrf
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Dari Tanggal</label>
+                                        <input type="date" name="start_date" id="start_date" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Sampai Tanggal</label>
+                                        <input type="date" name="end_date" id="end_date" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit"  name="cari" class="btn btn-secondary btn-block"><i class="fa fa-search"></i></button>
+
+                        </form>
+                        </div>
+                    </div>
+                    <div class="card">
                         <div class="card-body">
-                            <a href="{{ route('laporan.cetak') }}" class="btn btn-primary mb-3">Export Semua Laporan Pengaduan</a>
+                            {{-- <a href="{{ route('laporan.cetak') }}" class="btn btn-primary mb-3">Export Semua Laporan Pengaduan</a> --}}
                             <div>
                                 <table
                                     class="table table-hover scroll-horizontal-vertical w-100 table-bordered table-striped"
@@ -31,7 +55,7 @@
                                         @forelse ($pengaduans as $pengaduan)
                                             <tr>
                                                 <td>{{ $pengaduan->name }}</td>
-                                                <td>{{ $pengaduan->created_at->format('l, d F Y - H:i:s') }}</td>
+                                                <td>{{ $pengaduan->created_at->format('d-m-Y') }}</td>
                                                 <td>{{$pengaduan->status}}</td>
                                                 <td>
                                                     <div class="btn-group">

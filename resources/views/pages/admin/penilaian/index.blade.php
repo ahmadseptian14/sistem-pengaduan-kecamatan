@@ -81,11 +81,7 @@
 @push('addon-scripts')
     <script>
         $(document).ready( function () {
-            $('#table1').DataTable({
-                "order":[
-                    [3, "desc"]
-                ]
-            });
+            $('#table1').DataTable();
         } );
     </script>
 @endpush
