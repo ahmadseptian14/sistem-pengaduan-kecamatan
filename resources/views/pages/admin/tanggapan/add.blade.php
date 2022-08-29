@@ -33,7 +33,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Status</label>
-                                        <select name="status" id="status" class="form-control select2" multiple="multiple">                   
+                                        <select name="status_pengaduan" id="status_pengaduan" class="form-control select2" multiple="multiple">                   
                                             <option value="Belum di Proses">Belum di Proses</option>
                                             <option value="Sedang di Proses">Sedang di Proses</option>
                                             <option value="Selesai">Selesai</option>

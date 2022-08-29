@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('roles')->default('USER');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('foto_ktp')->nullable();
+            $table->string('verifikasi')->default('Belum di Verifikasi');
             $table->rememberToken();
             $table->timestamps();
         });

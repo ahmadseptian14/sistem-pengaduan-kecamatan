@@ -54,7 +54,7 @@
               </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-6">
+            {{-- <div class="col-lg-3 col-6">
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
@@ -67,7 +67,7 @@
                 </div>
                 <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
-            </div>
+            </div> --}}
             <!-- ./col -->
             <div class="col-lg-3 col-6">
               <!-- small box -->

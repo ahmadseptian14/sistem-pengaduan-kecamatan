@@ -11,7 +11,7 @@ class Tanggapan extends Model
 
 
     protected $fillable = [
-        'id', 'pengaduan_id', 'tanggapan', 'petugas_id',
+        'id',  'petugas_id', 'pengaduan_id', 'tanggapan', 'status_pengaduan'
     ];
 
     protected $hidden = [
@@ -21,7 +21,7 @@ class Tanggapan extends Model
 
     public function pengaduan()
     {
-    	return $this->hasOne(Pengaduan::class,'id', 'id');
+    	return $this->belongsTo(Pengaduan::class,'id', 'id');
     }
 
     public function proses()

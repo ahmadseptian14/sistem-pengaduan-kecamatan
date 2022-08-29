@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Pengaduan;
-use App\Models\Tanggapan;
-use Carbon\Carbon;
 use PDF;
+use Carbon\Carbon;
+use App\Models\Pengaduan;
+use App\Models\Penilaian;
+use App\Models\Tanggapan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PengaduanController extends Controller
@@ -28,8 +29,7 @@ class PengaduanController extends Controller
             ]);
         }
         
-        $pengaduans = Pengaduan::orderBy('created_at', 'desc')->get();
-
+        $pengaduans = Pengaduan::with(['tanggapan'])->orderBy('created_at', 'desc')->get();
 
         return view('pages.admin.pengaduan.index', [
             'pengaduans' => $pengaduans
@@ -38,11 +38,15 @@ class PengaduanController extends Controller
 
     public function pengaduan()
     {
-        $pengaduans = Pengaduan::orderBy('created_at', 'desc')->get();
-
+        $pengaduans = Pengaduan::with(['tanggapan', 'user'])
+                                ->where('user_id', Auth::user()->id)
+                                ->orderBy('created_at', 'desc')
+                                ->get();
+                                
         return view('pages.masyarakat.pengaduan', [
             'pengaduans' => $pengaduans
         ]);
+
     }
 
     /**
@@ -64,22 +68,28 @@ class PengaduanController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'description' => 'required',
-        ]);
+        if(Auth::user()->verifikasi == 'Belum di Verifikasi') {
 
-        $nik = Auth::user()->nik;
-        $id = Auth::user()->id;
-        $name = Auth::user()->name;
+            Alert::error('Mohon Maaf', 'Maaf akun anda belum di verifikasi oleh petugas');
 
-        $data = $request->all();
-        $data['user_nik']=$nik;
-        $data['user_id']=$id;
-        $data['name']=$name;
+        } else{
+            $nik = Auth::user()->nik;
+            $id = Auth::user()->id;
+            $nama = Auth::user()->name;
 
-        Alert::success('Berhasil', 'Pengaduan terkirim');
-
-        Pengaduan::create($data);
+            // $foto_pengaduan = request()->file('foto_pengaduan')->store('assets/foto-pengaduan', 'public');
+    
+            $data = $request->all();
+            $data['user_nik']=$nik;
+            $data['user_id']=$id;
+            $data['nama']=$nama;
+            // $data['foto_pengaduan'] = $foto_pengaduan;
+    
+            Alert::success('Berhasil', 'Pengaduan terkirim');
+    
+            Pengaduan::create($data);
+    
+        }
 
         return redirect()->route('pengaduan.create');
     }
@@ -96,13 +106,35 @@ class PengaduanController extends Controller
             'details', 'user' 
         ])->findOrFail($id);
 
-        $tanggapan = Tanggapan::where('pengaduan_id',$id)->first();
+        $tanggapans = Tanggapan::where('pengaduan_id',$id)->orderBy('created_at', 'DESC')->get();
 
+        $penilaians = Penilaian::where('pengaduans_id', $id)->get();
+            
         return view('pages.admin.pengaduan.detail',[
         'pengaduans' => $pengaduans,
-        'tanggapan' => $tanggapan
+        'tanggapans' => $tanggapans,
+        'penilaians' => $penilaians
+        
         ]);
     }
+
+    public function detail_pengaduan($id)
+    {
+        $pengaduans = Pengaduan::with([
+            'details', 'user',
+        ])->findOrFail($id);
+
+        $tanggapans = Tanggapan::where('pengaduan_id',$id)->orderBy('created_at', 'DESC')->get();
+
+        $penilaians = Penilaian::where('pengaduans_id', $id)->get();
+
+        return view('pages.masyarakat.detail',[
+        'pengaduans' => $pengaduans,
+        'tanggapans' => $tanggapans,
+        'penilaians' => $penilaians
+        ]);
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -160,5 +192,25 @@ class PengaduanController extends Controller
         }
 
        
+    }
+
+
+    public function grafik_pengaduan()
+    {   
+        // $belumDiProses = Pengaduan::with(['tanggapan'])->get();
+        // $sedangDiProses = Pengaduan::with(['tanggapan'])->get();
+        // $selesai = Pengaduan::with(['tanggapan'])->get();
+
+
+        $belumDiProses = Pengaduan::where('status', 'Belum di Proses')->count();
+        $selesai = Tanggapan::where('status_pengaduan', 'Selesai')->count();
+        $sedangDiProses = Tanggapan::where('status_pengaduan', 'Sedang di Proses')->count() - $selesai;
+
+
+        return view('pages.admin.pengaduan.grafik', [
+            'belumDiProses' => $belumDiProses,
+            'sedangDiProses' => $sedangDiProses,
+            'selesai' => $selesai
+        ]);
     }
 }

@@ -24,6 +24,7 @@ class User extends Authenticatable
         'email',
         'roles',
         'password',
+        'foto_ktp'
     ];
 
     /**
@@ -48,5 +49,10 @@ class User extends Authenticatable
     public function penilaians()
     {
         return $this->hasMany(Penilaian::class, 'users_id', 'id');
+    }
+
+    public function status_pengaduans()
+    {
+        return $this->hasMany(StatusPengaduan::class, 'pengaduans_id', 'id');
     }
 }

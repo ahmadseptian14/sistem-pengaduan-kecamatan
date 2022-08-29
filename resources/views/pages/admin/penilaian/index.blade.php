@@ -4,7 +4,7 @@
 <div class="section-content section-dashboard-home" data-aos="fade-up">
     <div class="container-fluid">
         <div class="dashboard-heading">
-            <h2 class="dashboard-title">Penialaian</h2>
+            <h2 class="dashboard-title">Penilaian</h2>
             <p class="dashboard-subtitle">
                 Daftar Penilaian
             </p>
@@ -24,42 +24,16 @@
                                             <th>Nama</th>
                                             <th>Tanggal</th>
                                             <th>Penilaian</th>
-                                            {{-- <th>Status</th> --}}
-                                            {{-- <th>Aksi</th> --}}
+                                            <th>Rating</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @forelse ($penilaians as $penilaians)
                                             <tr>
                                                 <td>{{ $penilaians->user->name }}</td>
-                                                <td>{{ $penilaians->created_at->format('l, d F Y - H:i:s') }}</td>
+                                                <td>{{ $penilaians->created_at->format('d F Y - H:i:s') }}</td>
                                                <td>{{$penilaians->description}}</td>
-                                                {{-- <td>
-                                                    <div class="btn-group">
-                                                        <div class="dropdown">
-                                                            <button class="btn btn-primay dropdown-toggle mr-1 mb-1"
-                                                                type="button" data-toggle="dropdown">
-                                                                Aksi
-                                                            </button>
-                                                            <div class="dropdown-menu">
-                                                                <a href="{{ route('pengaduan.show', $pengaduan->id) }}"
-                                                                    class="dropdown-item">
-                                                                    Lihat
-                                                                </a>
-                                                                <form
-                                                                    action="{{ route('pengaduan.destroy', $pengaduan->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('delete')
-                                                                    <button type="submit"
-                                                                        class="dropdown-item text-danger">
-                                                                        Hapus
-                                                                    </button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td> --}}
+                                               <td>{{$penilaians->rating}}</td>
                                             </tr>
                                         @empty
                                             <tr>

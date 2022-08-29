@@ -55,6 +55,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required', 'string', 'max:15'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'foto_ktp' => ['required', 'file'],
         ]);
     }
 
@@ -66,12 +67,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'nik' => $data['nik'],
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
+            'foto_ktp' => request()->file('foto_ktp')->store('assets/ktp', 'public'),
         ]);
+
+        
+        // if (request()->hasFile('foto_ktp')) {
+        //     $foto_ktp = request()->file('foto_ktp')->getClientOriginalName();
+        //     request()->file('foto_ktp')->storeAs('foto_ktp', $user->id . '/' . $foto_ktp, '');
+        //     $user->update(['foto_ktp' => $foto_ktp]);   
+        // }
+
+        return $user;
     }
 }

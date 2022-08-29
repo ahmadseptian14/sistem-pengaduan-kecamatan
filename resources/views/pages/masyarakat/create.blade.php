@@ -26,10 +26,34 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
                                         <div class="form-group">
-                                            <label style="color: white">Keterangan</label>
-                                            <textarea name="description" cols="10" rows="5" class="form-control"></textarea>
+                                            <label style="color: white">Judul Pengaduan</label>
+                                            <input name="judul_pengaduan" cols="10" rows="5" class="form-control"></input>
                                         </div>
                                     </div>
+                                    <div class="col-md-12 mb-4">
+                                        <div class="form-group">
+                                            <label style="color: white">Kategori Pengaduan</label>
+                                            <select name="kategori_pengaduan" id="kategori_pengaduan" class="form-control rating">                   
+                                                <option value="Perizinan Proposal Bantuan Madrasah">Perizinan Proposal Bantuan Madrasah</option>
+                                                <option value="Keterangan Beda Nama">Keterangan Beda Nama</option>
+                                                <option value="Surat Ahli Waris">Surat Ahli Waris</option>
+                                                <option value="Perizinan Keramaian Pernikahan">Perizinan Keramaian Pernikahan</option>                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="form-group">
+                                            <label style="color: white">Keterangan</label>
+                                            <textarea name="keterangan" cols="10" rows="5" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="form-group">
+                                            <label style="color: white">Tanggal Perizinan</label>
+                                            <input type="date" name="tanggal_perizinan" cols="10" rows="5" class="form-control"></input>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                                 <div class="row">
                                     <div class="col text-right">

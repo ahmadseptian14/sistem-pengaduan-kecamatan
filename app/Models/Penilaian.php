@@ -10,7 +10,7 @@ class Penilaian extends Model
     use HasFactory;
 
     protected $fillable = [
-        'description',  'users_id'
+        'keterangan', 'pengaduans_id', 'users_id', 'rating'
     ];
 
     protected $hidden = [
@@ -19,6 +19,10 @@ class Penilaian extends Model
 
     public function user() {
         return $this->belongsTo(User::class, 'users_id', 'id');
+    }
+
+    public function pengaduan() {
+        return $this->belongsTo(Pengaduan::class, 'users_id', 'id');
     }
 
 

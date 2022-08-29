@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pengaduan;
 use App\Models\Penilaian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,9 +30,13 @@ class PenilaianController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('pages.masyarakat.penilaian');
+        $pengaduan = Pengaduan::with(['details', 'user'])->findOrFail($id);
+
+        return view('pages.masyarakat.penilaian', [
+            'pengaduan' => $pengaduan
+        ]);
     }
 
     /**
@@ -42,21 +47,17 @@ class PenilaianController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'description' => 'required',
-        ]);
+
 
         $id = Auth::user()->id;
-      
-
         $data = $request->all();
         $data['users_id']=$id;
 
-        Alert::success('Berhasil', 'Pengaduan terkirim');
+        Alert::success('Berhasil', 'Penilaian terkirim');
 
         Penilaian::create($data);
 
-        return redirect()->route('penilaian.create');
+        return redirect()->route('pengaduan.all');
     }
 
     /**
@@ -102,5 +103,21 @@ class PenilaianController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function grafik()
+    {
+        $sangatBaik = Penilaian::where('rating', 'Sangat Baik')->count();
+        $baik = Penilaian::where('rating', 'Baik')->count();
+        $cukup = Penilaian::where('rating', 'Cukup')->count();
+        $kurang = Penilaian::where('rating', 'Kurang')->count();
+
+        return view('pages.admin.penilaian.grafik', [
+            'sangatBaik' => $sangatBaik,
+            'baik' => $baik,
+            'cukup' => $cukup,
+            'kurang' => $kurang
+        ]);
     }
 }

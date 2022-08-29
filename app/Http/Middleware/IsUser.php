@@ -22,6 +22,6 @@ class IsUser
             return $next($request);
         }
         
-        return redirect('/');
+        return redirect('/camat');
     }
 }

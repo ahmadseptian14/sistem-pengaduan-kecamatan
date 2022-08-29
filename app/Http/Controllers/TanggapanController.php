@@ -43,9 +43,10 @@ class TanggapanController extends Controller
     {   
         
         DB::table('pengaduans')->where('id', $request->pengaduan_id)->update([
-            'status'=> $request->status,
+            'status'=> null,
         ]);
         
+
         $petugas_id = Auth::user()->id;        
 
         $data = $request->all();

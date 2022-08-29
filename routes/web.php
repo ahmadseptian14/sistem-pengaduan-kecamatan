@@ -11,6 +11,7 @@ use App\Http\Controllers\TanggapanController;
 
 
 use App\Models\Pengaduan;
+use App\Models\Penilaian;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,15 +30,14 @@ Route::get('/', function () {
 
 // User
 Route::middleware(['auth', 'user'])->group(function() {
-
-
     //Pengaduan 
     Route::get('/input-pengaduan', [PengaduanController::class, 'create'])->name('pengaduan.create');
     Route::post('/input-pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
     Route::get('/pengaduan', [PengaduanController::class, 'pengaduan'])->name('pengaduan.all');
+    Route::get('/detail-pengaduan-masyarakat/{id}', [PengaduanController::class, 'detail_pengaduan'])->name('pengaduan.detail');
 
     // Penilaian
-    Route::get('/input-penilaian', [PenilaianController::class, 'create'])->name('penilaian.create');
+    Route::get('/input-penilaian/{id}', [PenilaianController::class, 'create'])->name('penilaian.create');
     Route::post('/input-penilaian', [PenilaianController::class, 'store'])->name('penilaian.store');
 
 });
@@ -53,6 +53,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::delete('/pengaduan/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.destroy');
     Route::get('/cetak-laporan', [PengaduanController::class, 'cetakForm'])->name('cetak.form');
     Route::get('/cetak-data-pengaduan', [PengaduanController::class, 'cetak'])->name('cetak.laporan');
+    Route::get('/grafik-status-pengaduan', [PengaduanController::class, 'grafik_pengaduan'])->name('grafik.pengaduan');
 
     // Tanggapan
     Route::get('/tanggapan/{id}', [TanggapanController::class, 'show'])->name('tanggapan.show');
@@ -69,11 +70,21 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/masyarakat-edit/{id}', [MasyarakatController::class, 'edit'])->name('masyarakat.edit');
     Route::put('/masyarakat/{id}', [MasyarakatController::class, 'update'])->name('masyarakat.update');
     Route::delete('/masyarakat/{id}', [MasyarakatController::class, 'destroy'])->name('masyarakat.destroy');
+    Route::post('/masyarakat-verifikasi', [MasyarakatController::class, 'verifikasi'])->name('masyarakat.verifikasi');
 
     // Penilaian
     Route::get('/penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');
+    Route::get('/grafik-penilaian', [PenilaianController::class, 'grafik'])->name('grafik.index');
 
 
+});
+
+Route::prefix('camat')->middleware(['auth', 'camat'])->group(function () {
+    Route::get('/', [PenilaianController::class, 'grafik'])->name('grafik.camat');
+    Route::get('/grafik-status-pengaduan', [PengaduanController::class, 'grafik_pengaduan'])->name('grafik.pengaduan');
+
+
+    
 });
 
 Auth::routes();

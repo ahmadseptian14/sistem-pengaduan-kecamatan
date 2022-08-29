@@ -220,9 +220,9 @@
             <div class="modal-content border-0" style="background-color: #141432;">
               <div class="modal-header border-0" style="padding:	2rem; padding-bottom: 0;">
                 <a class="modal-title" id="targetModalLabel">
-                  <img style="margin-top:0.5rem"
+                  {{-- <img style="margin-top:0.5rem"
                     src="http://api.elements.buildwithangga.com/storage/files/2/assets/Header/Header2/Header-2-3.png"
-                    alt="">
+                    alt=""> --}}
                 </a>
                 <button type="button" class="close btn-close text-white" data-bs-dismiss="modal" aria-label="Close">
                 </button>
@@ -255,19 +255,22 @@
             </li>
             @auth
             <li class="nav-item">
-              <a class="nav-link" href="{{route('penilaian.create')}}">Beri Penilaian</a>
+              <a class="nav-link" href="{{route('pengaduan.all')}}">Lihat Hasil Pengaduan</a>
             </li>
+            {{-- <li class="nav-item">
+              <a class="nav-link" href="{{route('penilaian.create')}}">Beri Penilaian</a>
+            </li> --}}
             @endauth
             @guest
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a class="nav-link" href="{{route('login')}}">Beri Penilaian</a>
-            </li>
+            </li> --}}
             @endguest
           </ul>
           <div class="gap-3">
             @guest
             <a href="{{route('login')}}" class="btn btn-default btn-no-fill">Log In</a>
-            <a href="{{route('register')}}" class="btn btn-fill text-white border-0">Daftar</a>
+            <a href="{{route('register')}}" class="btn btn-fill text-white border-0">Register</a>
             @endguest
             @auth
             <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">

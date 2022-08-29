@@ -16,10 +16,13 @@ class CreatePengaduansTable extends Migration
         Schema::create('pengaduans', function (Blueprint $table) {
             $table->id();
             $table->string('user_nik');
-            $table->string('name');
+            $table->string('nama');
             $table->integer('user_id');
-            $table->text('description');
-            $table->string('status')->default('Belum di Proses');
+            $table->string('judul_pengaduan');
+            $table->text('keterangan');
+            $table->string('kategori_pengaduan');
+            $table->string('tanggal_perizinan');
+            $table->string('status')->default('Belum di Proses')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

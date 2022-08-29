@@ -12,13 +12,13 @@ class Pengaduan extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'description', 'status', 'user_nik', 'user_id'
+        'nama', 'user_nik', 'user_id', 'judul_pengaduan', 'kategori_pengaduan', 'keterangan', 'status', 'tanggal_perizinan'
     ];
 
     protected $hidden = [
     
     ];
-
+    
     public function user() {
         return $this->belongsTo(User::class, 'user_nik', 'nik');
     }
@@ -32,15 +32,17 @@ class Pengaduan extends Model
     }
 
     public function tanggapans() {
-    return $this->belongsTo(Pengaduan::class, 'id', 'id');
+        return $this->hasMany(Tanggapan::class, 'pengaduan_id', 'id');
     }
 
     public function tanggapan() {
-    return $this->hasOne(Tanggapan::class);
+        return $this->hasOne(Tanggapan::class)->latestOfMany('status_pengaduan');
     }
 
     public function status() {
-    return $this->belongsTo(Tanggapan::class, 'status_id','status');
+        return $this->belongsTo(Tanggapan::class, 'status_id','status');
     }
+
+
     
 }

@@ -26,6 +26,19 @@ class MasyarakatController extends Controller
 
     }
 
+    public function verifikasi()
+    {
+        DB::table('users')->where('verifikasi', 'Belum di Verifikasi')->update([
+            'verifikasi'=> 'Sudah di Verifikasi',
+        ]);
+
+        Alert::success('Berhasil', 'Identitas berhasil di verifikasi');
+
+
+        return redirect()->back();
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
