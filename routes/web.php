@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\PenilaianController;
 use App\Http\Controllers\PetugasController;
+use App\Http\Controllers\SmsController;
 use App\Http\Controllers\TanggapanController;
 
 
@@ -35,6 +36,8 @@ Route::middleware(['auth', 'user'])->group(function() {
     Route::post('/input-pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
     Route::get('/pengaduan', [PengaduanController::class, 'pengaduan'])->name('pengaduan.all');
     Route::get('/detail-pengaduan-masyarakat/{id}', [PengaduanController::class, 'detail_pengaduan'])->name('pengaduan.detail');
+    Route::get('/pengaduan-sukses', [PengaduanController::class, 'pengaduan_success'])->name('pengaduan.success');
+
 
     // Penilaian
     Route::get('/input-penilaian/{id}', [PenilaianController::class, 'create'])->name('penilaian.create');
@@ -58,6 +61,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     // Tanggapan
     Route::get('/tanggapan/{id}', [TanggapanController::class, 'show'])->name('tanggapan.show');
     Route::post('/tanggapan', [TanggapanController::class, 'store'])->name('tanggapan.store');
+    Route::get('/tanggapan-success/{id}', [TanggapanController::class, 'tanggapan_success'])->name('tanggapan.success');
+
 
     // Petugas
     Route::get('/petugas', [PetugasController::class, 'index'])->name('petugas.index');
@@ -70,18 +75,25 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/masyarakat-edit/{id}', [MasyarakatController::class, 'edit'])->name('masyarakat.edit');
     Route::put('/masyarakat/{id}', [MasyarakatController::class, 'update'])->name('masyarakat.update');
     Route::delete('/masyarakat/{id}', [MasyarakatController::class, 'destroy'])->name('masyarakat.destroy');
-    Route::post('/masyarakat-verifikasi', [MasyarakatController::class, 'verifikasi'])->name('masyarakat.verifikasi');
+    Route::post('/masyarakat-verifikasi/{id}', [MasyarakatController::class, 'verifikasi'])->name('masyarakat.verifikasi');
 
     // Penilaian
     Route::get('/penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');
     Route::get('/grafik-penilaian', [PenilaianController::class, 'grafik'])->name('grafik.index');
 
+    // SMS
+    Route::get('/sms/{id}', [SmsController::class, 'create'])->name('sms.create');
+    Route::post('/send-sms', [SmsController::class, 'store'])->name('sms.store');
 
 });
 
 Route::prefix('camat')->middleware(['auth', 'camat'])->group(function () {
+    // Penilaian
     Route::get('/', [PenilaianController::class, 'grafik'])->name('grafik.camat');
-    Route::get('/grafik-status-pengaduan', [PengaduanController::class, 'grafik_pengaduan'])->name('grafik.pengaduan');
+
+
+    // Pengaduan
+    Route::get('/grafik-status-pengaduan', [PengaduanController::class, 'grafik_pengaduan_camat'])->name('grafik.pengaduanCamat');
 
 
     

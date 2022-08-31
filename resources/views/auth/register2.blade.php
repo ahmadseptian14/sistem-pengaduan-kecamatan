@@ -75,6 +75,19 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
+                                    <input type="text" id="username"
+                                        class="form-control  @error('username') is-invalid @enderror" name="username"
+                                        value="{{ old('username') }}" required autocomplete="username" />
+                                    <label class="form-label" for="username">Username</label>
+
+                                    @error('username')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-outline mb-4">
                                     <input type="number" id="phone"
                                         class="form-control  @error('phone') is-invalid @enderror" name="phone"
                                         value="{{ old('phone') }}" required autocomplete="phone" autofocus />

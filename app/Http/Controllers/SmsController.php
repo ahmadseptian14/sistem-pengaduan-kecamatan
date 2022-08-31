@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use Twilio\Rest\Client;
 use App\Models\Pengaduan;
-use App\Models\Penilaian;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\CreatedPengaduanNotification;
 
-
-
-class DashboardController extends Controller
+class SmsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,23 +14,8 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        // $user = User::all();
-
-        // Notification::send($user, new CreatedPengaduanNotification($user));
-
-        $pengaduan = Pengaduan::count();
-        $penilaian = Penilaian::count();
-        $petugas = User::where('roles', '=', 'ADMIN')->count();
-        $masyarakat = User::where('roles', '=', 'USER')->count();
-
-        return view('pages.dashboard', [
-            'pengaduan' => $pengaduan,
-            'penilaian' => $penilaian,
-            'petugas' => $petugas,
-            'masyarakat' => $masyarakat,
-            // 'user' => $user
-        ]);
+    {
+        //
     }
 
     /**
@@ -44,9 +23,13 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create($id)
+    {   
+        $pengaduan = Pengaduan::with(['user'])->findOrFail($id);
+
+        return view('pages.admin.pengaduan.sms', [
+            'pengaduan' => $pengaduan
+        ]);
     }
 
     /**
@@ -57,7 +40,22 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $account_sid = env('TWILIO_SID');
+            $account_token = env('TWILIO_TOKEN');
+            $number = env('TWILIO_FROM');
+
+            $client = new Client($account_sid, $account_token);
+            $client->messages->create('+62'.$request->number, [
+                'from' => $number,
+                'body' => $request->pesan
+            ]);
+
+            return redirect()->route('pengaduan.index');
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 
     /**

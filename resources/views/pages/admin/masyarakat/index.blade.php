@@ -45,7 +45,7 @@
                                                 <td>{{$masyarakat->verifikasi}}</td>
                                                 <td>
                                                     @if ($masyarakat->verifikasi == 'Sudah di Verifikasi')
-                                                    <form action="{{route('masyarakat.verifikasi')}}" method="POST" class="d-inline">
+                                                    <form action="{{route('masyarakat.verifikasi', $masyarakat->id)}}" method="POST" class="d-inline">
                                                         @csrf
                                                         <button class="btn btn-success mt-2 btn-sm">
                                                         <i class="fa fa-check"></i>
@@ -53,7 +53,7 @@
                                                     </form>
                                                         
                                                     @else
-                                                    <form action="{{route('masyarakat.verifikasi')}}" method="POST" class="d-inline">
+                                                    <form action="{{route('masyarakat.verifikasi',$masyarakat->id)}}" method="POST" class="d-inline">
                                                         @csrf
                                                         <button class="btn btn-danger mt-2 btn-sm">
                                                         <i class="fa fa-check"></i>

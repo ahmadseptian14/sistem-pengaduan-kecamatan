@@ -24,7 +24,8 @@ class User extends Authenticatable
         'email',
         'roles',
         'password',
-        'foto_ktp'
+        'foto_ktp',
+        'username'
     ];
 
     /**

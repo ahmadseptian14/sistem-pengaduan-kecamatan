@@ -26,9 +26,9 @@ class MasyarakatController extends Controller
 
     }
 
-    public function verifikasi()
+    public function verifikasi($id)
     {
-        DB::table('users')->where('verifikasi', 'Belum di Verifikasi')->update([
+        User::findOrFail($id)->where('verifikasi', 'Belum di Verifikasi')->update([
             'verifikasi'=> 'Sudah di Verifikasi',
         ]);
 

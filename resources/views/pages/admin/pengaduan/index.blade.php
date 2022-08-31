@@ -59,14 +59,14 @@
                                                 <tr>
                                                     <td>{{ $pengaduan->nama }}</td>
                                                     <td>{{ $pengaduan->created_at->format('d-m-Y - H:i:s') }}</td>
-                                                    <td>{{ $pengaduan->kategori_pengaduan}}</td>
+                                                    <td>{{ $pengaduan->kategori_pengaduan }}</td>
                                                     @if (empty($pengaduan->tanggapan->status_pengaduan))
                                                         <td>Belum di Respon</td>
                                                     @else
                                                         <td>{{ $pengaduan->tanggapan->status_pengaduan }}</td>
                                                     @endif
                                                     <td>
-                                                        <div class="btn-group">
+                                                        {{-- <div class="btn-group">
                                                             <div class="dropdown">
                                                                 <button class="btn btn-primay dropdown-toggle mr-1 mb-1"
                                                                     type="button" data-toggle="dropdown">
@@ -89,7 +89,22 @@
                                                                     </form>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div> --}}
+                                                        <a href="{{ route('pengaduan.show', $pengaduan->id) }}"
+                                                            class="btn btn-info btn-sm"><i class="fa fa-eye"
+                                                                style="margin-right: 5px"></i>Detail Pengaduan</a>
+                                                        <a href="{{ route('sms.create', $pengaduan->id) }}"
+                                                            class="btn btn-info btn-sm"><i class="fa fa-message"
+                                                                style="margin-right: 5px"></i>Kirim Pesan</a>
+
+                                                        <form action="{{ route('pengaduan.destroy', $pengaduan->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('delete')
+                                                            <button type="submit" class="btn btn-danger btn-sm mt-2">
+                                                                Hapus
+                                                            </button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                             @empty

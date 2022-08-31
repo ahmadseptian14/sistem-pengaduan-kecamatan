@@ -45,7 +45,6 @@ class TanggapanController extends Controller
         DB::table('pengaduans')->where('id', $request->pengaduan_id)->update([
             'status'=> null,
         ]);
-        
 
         $petugas_id = Auth::user()->id;        
 
@@ -56,6 +55,7 @@ class TanggapanController extends Controller
 
         Alert::success('Berhasil', 'Pengaduan berhasil ditanggapi');
         Tanggapan::create($data);
+        
         return redirect()->route('pengaduan.index');
     }
 
@@ -76,37 +76,13 @@ class TanggapanController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    // public function tanggapan_success()
+    // {   
+    //     $pengaduan = Pengaduan::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+    //     return view('pages.admin.pengaduan.success', [
+    //         'pengaduan' => $pengaduan
+    //     ]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    // }
 }
